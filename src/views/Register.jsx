@@ -20,7 +20,7 @@ function Register() {
         password: formData.password,
         role: "customer"
       });
-      toast("Harap login kembali tenkyu" + formData.email);
+      toast("Harap login kembali " + formData.email);
       navigate("/login");
     } catch (error) {
       toast.error(error.response.data.message);
