@@ -8,6 +8,7 @@ import ProductDetail from "./views/DetailProduk.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Login from "./views/Login.jsx";
 import Register from "./views/Register.jsx";
+import Cart from "./views/Cart.jsx";
 import { AuthContext, AuthProvider } from "./contexts/AuthContext.jsx";
 import CreateProduct from "./views/CreateProductAdmin.jsx";
 import axios from "axios";
@@ -35,6 +36,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/cart" element={<Cart />} />
           <Route
             path="/createproductadmin"
             element={

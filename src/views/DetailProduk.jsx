@@ -8,13 +8,34 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card, CardContent } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router";
+import toast from "react-hot-toast";
+import { useParams, useNavigate } from "react-router";
 
 export default function ProductDetail() {
   let { id } = useParams();
   const [data, setData] = useState(null);
   const [categoryName, setCategoryName] = useState("Tidak tersedia");
   const [quantity, setQuantity] = useState(1);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const formData = {
+      userId: Number(id),
+      productId: Number(id),
+      quantity: quantity,
+    };
+
+    try {
+      await axios.post("http://10.50.0.13:3001/cart", formData);
+      toast.success("Berhasil ditambahkan ke keranjang");
+      setTimeout(() => navigate("/cart"), 1000);
+    } catch (error) {
+      console.error(error);
+      toast.error("Gagal menambahkan ke keranjang");
+    }
+  };
 
   useEffect(() => {
     if (!id) return;
@@ -57,7 +78,6 @@ export default function ProductDetail() {
           <CardContent className="grid gap-6 md:grid-cols-2">
             <div className="flex justify-center">
               <img
-                // src={data.image || "https://levi.in/cdn/shop/files/817910046_01_Style_Shot_3ad17e3d-cea0-46d8-9501-adbdded8deb4.jpg?v=1695737263"}
                 src="https://levi.in/cdn/shop/files/817910046_01_Style_Shot_3ad17e3d-cea0-46d8-9501-adbdded8deb4.jpg?v=1695737263"
                 alt="Product"
                 className="rounded-lg shadow-md"
@@ -116,7 +136,10 @@ export default function ProductDetail() {
                 </button>
 
                 {/* Tombol Tambah ke Keranjang */}
-                <button className="flex items-center gap-2 px-4 py-2 text-white transition bg-blue-600 rounded-lg shadow hover:bg-blue-700">
+                <button
+                  onClick={handleSubmit}
+                  className="flex items-center gap-2 px-4 py-2 text-white transition bg-blue-600 rounded-lg shadow hover:bg-blue-700"
+                >
                   <FontAwesomeIcon icon={faShoppingCart} /> Add to cart
                 </button>
               </div>
