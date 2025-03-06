@@ -12,6 +12,7 @@ import { AuthContext, AuthProvider } from "./contexts/AuthContext.jsx";
 import CreateProduct from "./views/CreateProductAdmin.jsx";
 import axios from "axios";
 import ListProductAdmin from "./views/ListProductAdmin.jsx";
+import EditProductAdmin from "./EditProductAdmin.jsx";
 
 const token = localStorage.getItem("accessToken");
 if (token) {
@@ -48,6 +49,15 @@ createRoot(document.getElementById("root")).render(
             element={
               <ProtectedRoute
                 element={<ListProductAdmin />}
+                roleRequired="admin"
+              />
+            }
+          />
+          <Route
+            path="/editproductadmin/:id"
+            element={
+              <ProtectedRoute
+                element={<EditProductAdmin />}
                 roleRequired="admin"
               />
             }
