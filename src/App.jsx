@@ -1,10 +1,9 @@
-
-import './App.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import "./App.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect } from "react";
 import ProductCard from "./components/ProductCard";
 import axios from "axios";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 
 const App = () => {
   let { id } = useParams();
@@ -26,7 +25,8 @@ const App = () => {
                 const categoryResponse = await axios.get(
                   `http://10.50.0.13:3001/categories/${product.categoryId}`
                 );
-                product.categoryName = categoryResponse.data.name || "Tidak tersedia";
+                product.categoryName =
+                  categoryResponse.data.name || "Tidak tersedia";
               } catch (error) {
                 product.categoryName = "Tidak tersedia";
                 console.error("Error fetching category:", error);
@@ -53,7 +53,9 @@ const App = () => {
           <p>Data sedang dimuat</p>
         ) : (
           products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <Link to={`/products/${product.id}`}>
+              <ProductCard key={product.id} product={product} />
+            </Link>
           ))
         )}
       </div>

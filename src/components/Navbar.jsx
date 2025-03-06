@@ -63,9 +63,9 @@ function Navbar() {
             YUK CHECKOUT
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <Button key={1} sx={{ my: 2, color: "white", display: "block" }}>
+            <Link key={1} sx={{ my: 2, color: "white", display: "block" }} to={"/cart"}>
               Cart
-            </Button>
+            </Link>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             {!isAuthenticated && (

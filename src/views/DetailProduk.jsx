@@ -22,14 +22,34 @@ export default function ProductDetail() {
     event.preventDefault();
 
     const formData = {
-      userId: Number(id),
+      userId: Number(localStorage.getItem("userId")),
       productId: Number(id),
       quantity: quantity,
     };
 
     try {
-      await axios.post("http://10.50.0.13:3001/cart", formData);
-      toast.success("Berhasil ditambahkan ke keranjang");
+      // Check if the product already exists in the cart
+      const response = await axios.get(
+        `http://10.50.0.13:3001/cart?userId=${formData.userId}&productId=${formData.productId}`
+      );
+
+      if (response.data.length > 0) {
+        // Product exists, update the quantity
+        const existingItem = response.data[0];
+        const updatedQuantity = existingItem.quantity + formData.quantity;
+
+        await axios.put(`http://10.50.0.13:3001/cart/${existingItem.id}`, {
+          userId: formData.userId,
+          productId: formData.productId,
+          quantity: updatedQuantity,
+        });
+        toast.success("Quantity updated in cart");
+      } else {
+        // Product does not exist, add new item
+        await axios.post("http://10.50.0.13:3001/cart", formData);
+        toast.success("Added to cart");
+      }
+
       setTimeout(() => navigate("/cart"), 1000);
     } catch (error) {
       console.error(error);
@@ -78,7 +98,7 @@ export default function ProductDetail() {
           <CardContent className="grid gap-6 md:grid-cols-2">
             <div className="flex justify-center">
               <img
-                src="https://levi.in/cdn/shop/files/817910046_01_Style_Shot_3ad17e3d-cea0-46d8-9501-adbdded8deb4.jpg?v=1695737263"
+                src={data.image}
                 alt="Product"
                 className="rounded-lg shadow-md"
               />

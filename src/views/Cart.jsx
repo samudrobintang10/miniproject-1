@@ -6,7 +6,7 @@ export default function ShoppingCart({ userId }) {
   const [selectedItems, setSelectedItems] = useState([]);
 
   useEffect(() => {
-    fetch(`http://10.50.0.13:3001/cart?user_id=${userId}`)
+    fetch(`http://10.50.0.13:3001/cart?userId=${localStorage.getItem("userId")}`)
       .then((res) => res.json())
       .then(async (cartData) => {
         console.log("Cart Data:", cartData); // Debugging
@@ -96,7 +96,7 @@ export default function ShoppingCart({ userId }) {
               onChange={() => toggleSelect(item.id)}
             />
             <img
-              src="https://levi.in/cdn/shop/files/817910046_01_Style_Shot_3ad17e3d-cea0-46d8-9501-adbdded8deb4.jpg?v=1695737263"
+              src={item.image}
               alt={item.name}
               className="object-cover w-16 h-16 rounded-md"
             />
