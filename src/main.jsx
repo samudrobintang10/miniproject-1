@@ -8,6 +8,7 @@ import ProductDetail from "./views/DetailProduk.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Login from "./views/Login.jsx";
 import Register from "./views/Register.jsx";
+import Cart from "./views/Cart.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -18,7 +19,8 @@ createRoot(document.getElementById("root")).render(
         <Route path="/" element={<App />} />
         <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="/login" element={<Login />} />
-        <Route path= "/register" element={<Register />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
