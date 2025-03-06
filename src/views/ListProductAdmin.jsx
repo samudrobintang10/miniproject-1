@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
+import toast from "react-hot-toast";
 
 const ListProductAdmin = () => {
   const [products, setProducts] = useState([]);
@@ -16,6 +17,25 @@ const ListProductAdmin = () => {
     };
     fetchData();
   }, []);
+
+
+  let navigate = useNavigate()
+  const handleEdit = (id) => {
+    navigate(`/editproductadmin/${id}`);
+  };
+  
+  const handleDelete = (id) => {
+    try {
+      axios.delete("http://10.50.0.13:3001/products/" + id, {
+      })
+      toast.success("Products deleted successfully!")
+      navigate('/listproductadmin')
+      setProducts((prevData) => prevData.filter((item) => item.id !== id));
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className="container mx-auto p-4">
@@ -44,10 +64,11 @@ const ListProductAdmin = () => {
               <td className="border border-gray-300 p-2">{product.name}</td>
               <td className="border border-gray-300 p-2">${product.price}</td>
               <td className="border border-gray-300 p-2">
-                <button className="bg-yellow-500 text-white px-4 py-1 rounded mr-2">
+                <button className="bg-yellow-500 text-white px-4 py-1 rounded mr-2" onClick={() => handleEdit(product.id)}>
                   Edit
                 </button>
-                <button className="bg-red-500 text-white px-4 py-1 rounded">
+                <button className="bg-red-500 text-white px-4 py-1 rounded"
+                  onClick={() => handleDelete(product.id)}>
                   Delete
                 </button>
               </td>
