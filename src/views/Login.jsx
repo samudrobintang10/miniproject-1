@@ -28,7 +28,18 @@ function Login() {
   }
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
+    // Pastikan container utama di-set "relative" agar posisi absolute emoji bisa diatur
+    <div className="relative flex items-center justify-center h-screen bg-gray-100">
+      {/* Emoji di kiri */}
+      <div className="absolute left-120 top-1/2 transform -translate-y-1/2 text-4xl">
+        😊
+      </div>
+      {/* Emoji di kanan */}
+      <div className="absolute right-120 top-1/2 transform -translate-y-1/2 text-4xl">
+        😊
+      </div>
+
+      {/* Card/form login */}
       <div className="w-full max-w-md p-6 bg-white rounded-2xl shadow-lg">
         <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
         <form onSubmit={handleSubmit}>
@@ -61,10 +72,7 @@ function Login() {
         </form>
         <div className="mt-5 flex justify-center items-center gap-x-1">
           <p>Kamu belum punya akun?</p>
-          <Link
-            to="/register"
-            className="text-blue-500"
-          >
+          <Link to="/register" className="text-blue-500">
             Register
           </Link>
         </div>
@@ -74,3 +82,4 @@ function Login() {
 }
 
 export default Login;
+

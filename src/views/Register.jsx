@@ -29,6 +29,14 @@ function Register() {
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
+        {/* Emoji di kiri */}
+      <div className="absolute left-120 top-1/2 transform -translate-y-1/2 text-4xl">
+        😊
+      </div>
+      {/* Emoji di kanan */}
+      <div className="absolute right-120 top-1/2 transform -translate-y-1/2 text-4xl">
+        😊
+      </div>
       <div className="w-full max-w-md p-6 bg-white rounded-2xl shadow-lg">
         <h2 className="text-2xl font-bold text-center mb-4">Register</h2>
         <form onSubmit={handleSubmit}>
