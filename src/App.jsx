@@ -1,3 +1,6 @@
+
+import './App.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState, useEffect } from "react";
 import ProductCard from "./components/ProductCard";
 import axios from "axios";
