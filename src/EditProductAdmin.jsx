@@ -71,6 +71,7 @@ const EditProductAdmin = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Edit Product</h1>
       <form onSubmit={handleSave} className="space-y-4">
+      <label htmlFor='name'>Name</label>
         <input
           type="text"
           name="name"
@@ -80,6 +81,7 @@ const EditProductAdmin = () => {
           className="w-full p-2 border rounded"
           required
         />
+        <label htmlFor='name'>Price</label>
         <input
           type="number"
           name="price"
@@ -89,6 +91,7 @@ const EditProductAdmin = () => {
           className="w-full p-2 border rounded"
           required
         />
+        <label htmlFor='name'>Category ID</label>
         <input
           type="number"
           name="categoryId"
@@ -98,6 +101,7 @@ const EditProductAdmin = () => {
           className="w-full p-2 border rounded"
           required
         />
+        <label htmlFor='name'>Image Product</label>
         <input
           type="text"
           name="image"
@@ -107,6 +111,7 @@ const EditProductAdmin = () => {
           className="w-full p-2 border rounded"
           required
         />
+        <label htmlFor='name'>Description</label>
         <textarea
           name="description"
           placeholder="Description"
@@ -115,6 +120,7 @@ const EditProductAdmin = () => {
           className="w-full p-2 border rounded"
           required
         ></textarea>
+        <label htmlFor='name'>Stock</label>
         <input
           type="number"
           name="stock"
