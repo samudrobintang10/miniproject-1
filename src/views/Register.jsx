@@ -4,33 +4,32 @@ import toast from "react-hot-toast";
 import InputField from "../components/InputField";
 import { Link, useNavigate } from "react-router";
 
-function Login() {
+function Register() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      const response = await axios.post("http://10.50.0.13:3001/login", {
+      const response = await axios.post("http://10.50.0.13:3001/register", {
         email: formData.email,
         password: formData.password,
+        role: "customer"
       });
-      toast("Selamat datang " + formData.email);
-      localStorage.setItem("accessToken", response.data.accessToken);
-      navigate("/");
+      toast("Harap login kembali tenkyu" + formData.email);
+      navigate("/login");
     } catch (error) {
       toast.error(error.response.data.message);
     }
   }
 
   return (
-    // Pastikan container utama di-set "relative" agar posisi absolute emoji bisa diatur
-    <div className="relative flex items-center justify-center h-screen bg-gray-100">
-      {/* Emoji di kiri */}
+    <div className="flex items-center justify-center h-screen bg-gray-100">
+        {/* Emoji di kiri */}
       <div className="absolute left-120 top-1/2 transform -translate-y-1/2 text-4xl">
         😊
       </div>
@@ -38,10 +37,8 @@ function Login() {
       <div className="absolute right-120 top-1/2 transform -translate-y-1/2 text-4xl">
         😊
       </div>
-
-      {/* Card/form login */}
       <div className="w-full max-w-md p-6 bg-white rounded-2xl shadow-lg">
-        <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
+        <h2 className="text-2xl font-bold text-center mb-4">Register</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <InputField
@@ -67,13 +64,16 @@ function Login() {
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition"
           >
-            Login
+            Register
           </button>
         </form>
         <div className="mt-5 flex justify-center items-center gap-x-1">
-          <p>Kamu belum punya akun?</p>
-          <Link to="/register" className="text-blue-500">
-            Register
+          <p>Sudah punya akun?</p>
+          <Link
+            to="/login"
+            className="text-blue-500"
+          >
+            Login
           </Link>
         </div>
       </div>
@@ -81,5 +81,4 @@ function Login() {
   );
 }
 
-export default Login;
-
+export default Register;
