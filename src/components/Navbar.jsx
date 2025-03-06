@@ -38,38 +38,48 @@ function Navbar() {
   const handleLogout = () => {
     localStorage.clear();
     navigate(0);
-  }
+  };
 
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            YUK CHECKOUT
-          </Typography>
+          <Link to={"/"}>
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="#app-bar-with-responsive-menu"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              YUK CHECKOUT
+            </Typography>
+          </Link>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <Link key={1} sx={{ my: 2, color: "white", display: "block" }} to={"/cart"}>
+            <Link
+              key={1}
+              sx={{ my: 2, color: "white", display: "block" }}
+              to={"/cart"}
+            >
               Cart
             </Link>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             {!isAuthenticated && (
-              <Link key={1} to={"/login"} sx={{ my: 2, color: "white", display: "block" }}>
+              <Link
+                key={1}
+                to={"/login"}
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
                 Login
               </Link>
             )}
@@ -100,7 +110,12 @@ function Navbar() {
                   onClose={handleCloseUserMenu}
                 >
                   <MenuItem key={1}>
-                    <Typography sx={{ textAlign: "center" }} onClick={handleLogout}>Logout</Typography>
+                    <Typography
+                      sx={{ textAlign: "center" }}
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </Typography>
                   </MenuItem>
                 </Menu>
               </>

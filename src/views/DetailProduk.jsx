@@ -125,7 +125,7 @@ export default function ProductDetail() {
 
                 {/* Price */}
                 <p className="text-2xl font-semibold text-gray-900">
-                  Rp {data.price || "Stok Kosong"}
+                  $ {data.price || "Stok Kosong"}
                 </p>
                 <p className="pt-1 text-sm text-gray-400 fontsemibold">
                   Stok: {data.stock || "Stok Kosong"}

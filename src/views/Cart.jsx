@@ -105,11 +105,11 @@ export default function ShoppingCart({ userId }) {
               <p className="text-sm text-gray-600">{item.stock}</p>
               <div className="flex items-center gap-2">
                 <span className="text-lg font-bold">
-                  Rp{(item.price || item.product?.price || 0).toLocaleString()}
+                  ${(item.price || item.product?.price || 0).toLocaleString()}
                 </span>
                 {item.oldPrice && (
                   <span className="text-sm text-gray-400 line-through">
-                    Rp{item.oldPrice?.toLocaleString() || 0}
+                    ${item.oldPrice?.toLocaleString() || 0}
                   </span>
                 )}
               </div>
@@ -124,7 +124,7 @@ export default function ShoppingCart({ userId }) {
       </div>
       <div className="p-4 mt-4 bg-white rounded-lg shadow-md">
         <h2 className="mb-2 text-lg font-bold">Ringkasan Belanja</h2>
-        <p className="mb-5 text-gray-600">Total: Rp{totalPrice.toLocaleString()}</p>
+        <p className="mb-5 text-gray-600">Total: ${totalPrice.toLocaleString()}</p>
         <Button
           variant="contained"
           className="w-full mt-2"
