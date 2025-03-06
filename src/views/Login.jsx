@@ -21,6 +21,8 @@ function Login() {
       });
       toast("Selamat datang " + formData.email);
       localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("role", response.data.user.role);
+      localStorage.setItem("userId", response.data.user.id);
       navigate("/");
     } catch (error) {
       toast.error(error.response.data.message);
