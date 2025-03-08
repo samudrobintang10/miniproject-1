@@ -14,7 +14,7 @@ import { AuthContext } from "../contexts/AuthContext";
 
 export default function ProductDetail() {
   let { id } = useParams();
-  const {isAuthenticated} = useContext(AuthContext);
+  const { isAuthenticated } = useContext(AuthContext);
   const [data, setData] = useState(null);
   const [categoryName, setCategoryName] = useState("Tidak tersedia");
   const [quantity, setQuantity] = useState(1);
@@ -24,35 +24,57 @@ export default function ProductDetail() {
     event.preventDefault();
 
     if (!isAuthenticated) {
-      return navigate("/")
+      return navigate("/");
     }
 
-    const formData = {
-      userId: Number(localStorage.getItem("userId")),
-      productId: Number(id),
-      quantity: quantity,
-    };
+    const userId = Number(localStorage.getItem("userId"));
+    const productId = Number(id);
 
     try {
-      // Check if the product already exists in the cart
-      const response = await axios.get(
-        `http://localhost:3001/cart?userId=${formData.userId}&productId=${formData.productId}`
+      // Ambil data produk dari backend
+      const productResponse = await axios.get(
+        `http://localhost:3001/products/${productId}`
+      );
+      const productStock = productResponse.data.stock;
+
+      // Ambil data dari cart untuk mengecek jumlah yang sudah ada di keranjang
+      const cartResponse = await axios.get(
+        `http://localhost:3001/cart?userId=${userId}&productId=${productId}`
       );
 
-      if (response.data.length > 0) {
-        // Product exists, update the quantity
-        const existingItem = response.data[0];
-        const updatedQuantity = existingItem.quantity + formData.quantity;
+      let existingQuantity = 0;
+      let cartItemId = null;
 
-        await axios.put(`http://localhost:3001/cart/${existingItem.id}`, {
-          userId: formData.userId,
-          productId: formData.productId,
-          quantity: updatedQuantity,
+      if (cartResponse.data.length > 0) {
+        existingQuantity = cartResponse.data[0].quantity;
+        cartItemId = cartResponse.data[0].id;
+      }
+
+      const totalQuantity = existingQuantity + quantity;
+
+      // Cek apakah total kuantitas melebihi stok
+      if (totalQuantity > productStock) {
+        toast.error(
+          `Maksimum stok tersedia hanya ${productStock}. Anda sudah memiliki ${existingQuantity} di keranjang.`
+        );
+        return;
+      }
+
+      if (cartItemId) {
+        // Update jumlah barang di keranjang
+        await axios.put(`http://localhost:3001/cart/${cartItemId}`, {
+          userId,
+          productId,
+          quantity: totalQuantity,
         });
         toast.success("Quantity updated in cart");
       } else {
-        // Product does not exist, add new item
-        await axios.post("http://localhost:3001/cart", formData);
+        // Tambah produk baru ke keranjang
+        await axios.post("http://localhost:3001/cart", {
+          userId,
+          productId,
+          quantity,
+        });
         toast.success("Added to cart");
       }
 
