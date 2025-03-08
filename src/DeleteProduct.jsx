@@ -9,7 +9,7 @@ const DeleteProduct = () => {
     const handleSave = (event) => {
         event.preventDefault()
         try {
-            axios.put("http://10.50.0.13:3001/products/" + id, {
+            axios.put("http://localhost:3001/products/" + id, {
                 price: formData.price,
                 stock: formData.stock,
             })

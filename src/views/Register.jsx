@@ -15,7 +15,7 @@ function Register() {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      const response = await axios.post("http://10.50.0.13:3001/register", {
+      const response = await axios.post("http://localhost:3001/register", {
         email: formData.email,
         password: formData.password,
         role: "customer"

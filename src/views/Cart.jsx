@@ -6,14 +6,14 @@ export default function ShoppingCart({ userId }) {
   const [selectedItems, setSelectedItems] = useState([]);
 
   useEffect(() => {
-    fetch(`http://10.50.0.13:3001/cart?userId=${localStorage.getItem("userId")}`)
+    fetch(`http://localhost:3001/cart?userId=${localStorage.getItem("userId")}`)
       .then((res) => res.json())
       .then(async (cartData) => {
         console.log("Cart Data:", cartData); // Debugging
 
         // Fetch detail produk berdasarkan productId
         const productRequests = cartData.map((item) =>
-          fetch(`http://10.50.0.13:3001/products/${item.productId}`)
+          fetch(`http://localhost:3001/products/${item.productId}`)
             .then((res) => res.json())
             .then((product) => ({
               ...item,

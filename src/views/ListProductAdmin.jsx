@@ -9,7 +9,7 @@ const ListProductAdmin = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await axios.get("http://10.50.0.13:3001/products");
+        const data = await axios.get("http://localhost:3001/products");
         setProducts(data.data);
       } catch (error) {
         console.log(error);
@@ -26,7 +26,7 @@ const ListProductAdmin = () => {
   
   const handleDelete = (id) => {
     try {
-      axios.delete("http://10.50.0.13:3001/products/" + id, {
+      axios.delete("http://localhost:3001/products/" + id, {
       })
       toast.success("Products deleted successfully!")
       navigate('/listproductadmin')

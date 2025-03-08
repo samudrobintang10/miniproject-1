@@ -13,7 +13,7 @@ const App = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://10.50.0.13:3001/products");
+        const response = await axios.get("http://localhost:3001/products");
         const productList = response.data;
 
         // Mengupdate setiap produk dengan nama kategori
@@ -23,7 +23,7 @@ const App = () => {
               try {
                 // Mengambil kategori berdasarkan categoryId
                 const categoryResponse = await axios.get(
-                  `http://10.50.0.13:3001/categories/${product.categoryId}`
+                  `http://localhost:3001/categories/${product.categoryId}`
                 );
                 product.categoryName =
                   categoryResponse.data.name || "Tidak tersedia";

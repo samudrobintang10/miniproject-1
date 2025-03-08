@@ -7,12 +7,14 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card, CardContent } from "@mui/material";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams, useNavigate } from "react-router";
+import { AuthContext } from "../contexts/AuthContext";
 
 export default function ProductDetail() {
   let { id } = useParams();
+  const {isAuthenticated} = useContext(AuthContext);
   const [data, setData] = useState(null);
   const [categoryName, setCategoryName] = useState("Tidak tersedia");
   const [quantity, setQuantity] = useState(1);
@@ -20,6 +22,10 @@ export default function ProductDetail() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!isAuthenticated) {
+      return navigate("/")
+    }
 
     const formData = {
       userId: Number(localStorage.getItem("userId")),
@@ -30,7 +36,7 @@ export default function ProductDetail() {
     try {
       // Check if the product already exists in the cart
       const response = await axios.get(
-        `http://10.50.0.13:3001/cart?userId=${formData.userId}&productId=${formData.productId}`
+        `http://localhost:3001/cart?userId=${formData.userId}&productId=${formData.productId}`
       );
 
       if (response.data.length > 0) {
@@ -38,7 +44,7 @@ export default function ProductDetail() {
         const existingItem = response.data[0];
         const updatedQuantity = existingItem.quantity + formData.quantity;
 
-        await axios.put(`http://10.50.0.13:3001/cart/${existingItem.id}`, {
+        await axios.put(`http://localhost:3001/cart/${existingItem.id}`, {
           userId: formData.userId,
           productId: formData.productId,
           quantity: updatedQuantity,
@@ -46,7 +52,7 @@ export default function ProductDetail() {
         toast.success("Quantity updated in cart");
       } else {
         // Product does not exist, add new item
-        await axios.post("http://10.50.0.13:3001/cart", formData);
+        await axios.post("http://localhost:3001/cart", formData);
         toast.success("Added to cart");
       }
 
@@ -63,13 +69,13 @@ export default function ProductDetail() {
     const getData = async () => {
       try {
         const response = await axios.get(
-          `http://10.50.0.13:3001/products/${id}`
+          `http://localhost:3001/products/${id}`
         );
         setData(response.data);
 
         if (response.data.categoryId) {
           const categoryResponse = await axios.get(
-            `http://10.50.0.13:3001/categories/${response.data.categoryId}`
+            `http://localhost:3001/categories/${response.data.categoryId}`
           );
           setCategoryName(categoryResponse.data.name || "Tidak tersedia");
         }

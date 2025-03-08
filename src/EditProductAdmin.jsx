@@ -22,7 +22,7 @@ const EditProductAdmin = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get(`http://10.50.0.13:3001/products/${id}`);
+        const response = await axios.get(`http://localhost:3001/products/${id}`);
         setFormData(
           {
             id: response.data.id,
@@ -50,7 +50,7 @@ const EditProductAdmin = () => {
   const handleSave = async (event) => {
     event.preventDefault();
     try {
-      await axios.put(`http://10.50.0.13:3001/products/${id}`, {
+      await axios.put(`http://localhost:3001/products/${id}`, {
         name: formData.name,
         price: parseFloat(formData.price), // Ensures price can accept decimals like 10.99
         categoryId: parseInt(formData.categoryId, 10), // Converts to integer

@@ -23,7 +23,7 @@ const CreateProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://10.50.0.13:3001/products", {
+      await axios.post("http://localhost:3001/products", {
         name: formData.name,
         price: parseFloat(formData.price), // Ensures price can accept decimals like 10.99
         categoryId: parseInt(formData.categoryId, 10), // Converts to integer
