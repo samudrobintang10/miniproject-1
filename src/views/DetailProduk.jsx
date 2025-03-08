@@ -38,7 +38,6 @@ export default function ProductDetail() {
       const response = await axios.get(
         `http://localhost:3001/cart?userId=${formData.userId}&productId=${formData.productId}`
       );
-
       if (response.data.length > 0) {
         // Product exists, update the quantity
         const existingItem = response.data[0];
