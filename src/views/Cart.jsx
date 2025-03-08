@@ -60,7 +60,7 @@ export default function ShoppingCart({ userId }) {
     setCart((prev) =>
       prev.map((item) =>
         item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + amount) }
+          ? { ...item, quantity: Math.min(item.stock, Math.max(1, item.quantity + amount)) }
           : item
       )
     );
@@ -102,7 +102,7 @@ export default function ShoppingCart({ userId }) {
             />
             <div className="flex-1">
               <h2 className="font-semibold text-gray-800">{item.name}</h2>
-              <p className="text-sm text-gray-600">{item.stock}</p>
+              <p className="text-sm text-gray-600">Stock: {item.stock}</p>
               <div className="flex items-center gap-2">
                 <span className="text-lg font-bold">
                   ${(item.price || item.product?.price || 0).toLocaleString()}

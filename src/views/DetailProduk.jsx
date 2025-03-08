@@ -88,7 +88,7 @@ export default function ProductDetail() {
   }, [id]);
 
   const increaseQuantity = () => {
-    setQuantity((prev) => prev + 1);
+    setQuantity((prev) => (prev < data.stock ? prev + 1 : prev));
   };
 
   const decreaseQuantity = () => {
