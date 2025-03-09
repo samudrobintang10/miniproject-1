@@ -14,6 +14,12 @@ export const AuthProvider = ({ children }) => {
     if (path.pathname === "/login" && isAuthenticated) {
         navigate("/");
     }
+    if (path.pathname === "/register" && isAuthenticated) {
+      navigate("/");
+    }
+    if (path.pathname === "/cart" && !isAuthenticated) {
+      navigate("/");
+    }
   }, [path]);
 
   return (
