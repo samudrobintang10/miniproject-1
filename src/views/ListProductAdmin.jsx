@@ -62,6 +62,7 @@ const ListProductAdmin = () => {
             <th className="border border-gray-300 p-2">ID</th>
             <th className="border border-gray-300 p-2">Name</th>
             <th className="border border-gray-300 p-2">Price</th>
+            <th className="border border-gray-300 p-2">Stock</th>
             <th className="border border-gray-300 p-2">Actions</th>
           </tr>
         </thead>
@@ -71,6 +72,7 @@ const ListProductAdmin = () => {
               <td className="border border-gray-300 p-2">{product.id}</td>
               <td className="border border-gray-300 p-2">{product.name}</td>
               <td className="border border-gray-300 p-2">${product.price}</td>
+              <td className="border border-gray-300 p-2">{product.stock}</td>
               <td className="border border-gray-300 p-2">
                 <button className="bg-yellow-500 text-white px-4 py-1 rounded mr-2" onClick={() => handleEdit(product.id)}>
                   Edit
