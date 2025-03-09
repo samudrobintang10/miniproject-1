@@ -10,11 +10,9 @@ import { useContext, useState } from "react";
 import { Avatar, IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
 import { Link, useNavigate } from "react-router";
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
 function Navbar() {
   const { isAuthenticated } = useContext(AuthContext);
+  const { role } = useContext(AuthContext);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -35,8 +33,14 @@ function Navbar() {
     setAnchorElUser(null);
   };
 
+  const handleAdminPage = () => {
+    navigate("/listproductadmin");
+    handleCloseUserMenu();
+  };
+
   const handleLogout = () => {
     localStorage.clear();
+    handleCloseUserMenu();
     navigate(0);
   };
 
@@ -50,7 +54,6 @@ function Navbar() {
               variant="h6"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
@@ -64,59 +67,60 @@ function Navbar() {
               YUK CHECKOUT
             </Typography>
           </Link>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <Link
-              key={1}
-              sx={{ my: 2, color: "white", display: "block" }}
-              to={"/cart"}
-            >
-              Cart
-            </Link>
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            {!isAuthenticated && (
+          {isAuthenticated && (
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               <Link
                 key={1}
-                to={"/login"}
                 sx={{ my: 2, color: "white", display: "block" }}
+                to={"/cart"}
+              >
+                Cart
+              </Link>
+            </Box>
+          )}
+          <Box sx={{ marginLeft: "auto" }}>
+            {!isAuthenticated ? (
+              <Link
+                to={"/login"}
+                style={{
+                  textDecoration: "none",
+                  color: "white",
+                  fontWeight: "bold",
+                }}
               >
                 Login
               </Link>
-            )}
-            {isAuthenticated && (
+            ) : (
               <>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar
-                      alt="Remy Sharp"
-                      src="/static/images/avatar/2.jpg"
+                      alt="User"
+                      src="https://i.pinimg.com/736x/c0/95/5f/c0955f9a5adac3772a4af79dd1a1e226.jpg"
+                      sx={{
+                        width: 40,
+                        height: 40,
+                        border: "2px solid white",
+                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+                        bgcolor: "primary.main", 
+                        color: "white", 
+                      }}
                     />
                   </IconButton>
                 </Tooltip>
                 <Menu
                   sx={{ mt: "45px" }}
-                  id="menu-appbar"
                   anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
+                  anchorOrigin={{ vertical: "top", horizontal: "right" }}
                   keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
+                  transformOrigin={{ vertical: "top", horizontal: "right" }}
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  <MenuItem key={1}>
-                    <Typography
-                      sx={{ textAlign: "center" }}
-                      onClick={handleLogout}
-                    >
-                      Logout
-                    </Typography>
-                  </MenuItem>
+                  {role === "admin" && (
+                    <MenuItem onClick={handleAdminPage}>Admin Page</MenuItem>
+                  )}
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
               </>
             )}

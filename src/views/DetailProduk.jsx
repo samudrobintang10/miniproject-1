@@ -24,7 +24,7 @@ export default function ProductDetail() {
     event.preventDefault();
 
     if (!isAuthenticated) {
-      return navigate("/");
+      return navigate("/login");
     }
 
     const userId = Number(localStorage.getItem("userId"));

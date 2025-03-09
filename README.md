@@ -8,18 +8,17 @@ This project use ReactJS, Material UI and Tailwind
 
 ## Authors
 
-🥇 [@samudrobintang10](https://github.com/samudrobintang10)
-🥇 [@Brianvikonura](https://github.com/Brianvikonura)
-🥇 [@ilhampraja](https://github.com/ilhampraja)
-🥇 [@snkhomaria](https://github.com/snkhomaria)
-
+- 🥇 [@samudrobintang10](https://github.com/samudrobintang10) Bintang Samudro
+- 🥇 [@Brianvikonura](https://github.com/Brianvikonura) Brian Viko Nura
+- 🥇 [@ilhampraja](https://github.com/ilhampraja) Muhammad Ilham Makarim
+- 🥇 [@snkhomaria](https://github.com/snkhomaria) Siti Nurkhomaria
 
 
 ## API Reference
 
 
-```http
-  https://www.exchangerate-api.com/
+```
+  https://drive.google.com/file/d/1uMQ06TRD5gmVx_kzAqhnIOV9DvotDtFP/view?usp=sharing
 ```
 
 ## How to run project
@@ -27,7 +26,7 @@ This project use ReactJS, Material UI and Tailwind
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/samudrobintang10/miniproject-1.git
 ```
 
 Install dependencies

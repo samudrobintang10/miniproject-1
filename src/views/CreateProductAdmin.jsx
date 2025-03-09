@@ -32,7 +32,7 @@ const CreateProduct = () => {
         stock: parseInt(formData.stock, 10), // Converts to integer
         userId: parseInt(formData.userId, 10), // Converts to integer
       });
-      toast("Product created successfully");
+      toast.success("Product created successfully");
       navigate("/listproductadmin");
     } catch (error) {
       console.error("Error creating product:", error);
@@ -42,6 +42,13 @@ const CreateProduct = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+    const hasReloaded = sessionStorage.getItem("hasReloaded");
+
+    if (!hasReloaded) {
+      sessionStorage.setItem("hasReloaded", "true"); // Tandai bahwa sudah reload
+      window.location.reload(); // Reload hanya sekali
+    }
+
     const fetchCategories = async () => {
       try {
         const response = await axios.get("http://localhost:3001/categories");

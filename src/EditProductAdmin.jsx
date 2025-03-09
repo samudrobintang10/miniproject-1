@@ -20,8 +20,15 @@ const EditProductAdmin = () => {
   const navigate = useNavigate();
   const [originalData, setOriginalData] = useState(null);
   const [categories, setCategories] = useState([]);
-
+  
   useEffect(() => {
+    const hasReloaded = sessionStorage.getItem("hasReloaded");
+
+    if (!hasReloaded) {
+      sessionStorage.setItem("hasReloaded", "true"); // Tandai bahwa sudah reload
+      window.location.reload(); // Reload hanya sekali
+    }
+
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`http://localhost:3001/products/${id}`);
@@ -57,11 +64,11 @@ const handleSave = async (event) => {
     await axios.put(`http://localhost:3001/products/${id}`, {
       name: formData.name,
       price: parseFloat(formData.price),
-      categoryId: parseInt(formData.categoryId),
+      categoryId: parseInt(formData.categoryId, 10),
       image: formData.image,
       description: formData.description,
-      stock: parseInt(formData.stock),
-      userId: parseInt(formData.userId),
+      stock: parseInt(formData.stock, 10),
+      userId: parseInt(formData.userId, 10)
     });
 
     toast.success("Product updated successfully!");
