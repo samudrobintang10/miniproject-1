@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import { useNavigate } from "react-router";
-import toast from 'react-hot-toast';
-import axios from 'axios';
+import toast from "react-hot-toast";
+import axios from "axios";
 
 const EditProductAdmin = () => {
   let { id } = useParams();
@@ -18,60 +18,79 @@ const EditProductAdmin = () => {
   });
 
   const navigate = useNavigate();
+  const [originalData, setOriginalData] = useState(null);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const getData = async () => {
+    const hasReloaded = sessionStorage.getItem("hasReloaded");
+
+    if (!hasReloaded) {
+      sessionStorage.setItem("hasReloaded", "true"); // Tandai bahwa sudah reload
+      window.location.reload(); // Reload hanya sekali
+    }
+
+    const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/products/${id}`);
-        setFormData(
-          {
-            id: response.data.id,
-            name: response.data.name,
-            price: response.data.price,
-            categoryId: response.data.categoryId,
-            image: response.data.image,
-            description: response.data.description,
-            stock: response.data.stock,
-            userId: localStorage.getItem("userId"),
-          }
+        const response = await axios.get(
+          `http://localhost:3001/products/${id}`
         );
-      } catch (err) {
-        console.error(err);
+        setFormData(response.data);
+        setOriginalData(response.data);
+      } catch (error) {
+        console.error("Error fetching product:", error);
       }
     };
-    getData();
-  }, [id]);
+    fetchProduct();
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-  };
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/categories");
+        setCategories(response.data);
+      } catch (error) {
+        toast.error("Error fetching categories.");
+        console.error(error);
+      }
+    };
+    fetchProduct();
+    fetchCategories();
+  }, [id]);
 
   const handleSave = async (event) => {
     event.preventDefault();
+    if (JSON.stringify(formData) === JSON.stringify(originalData)) {
+      toast("No changes detected");
+      return;
+    }
+
     try {
       await axios.put(`http://localhost:3001/products/${id}`, {
         name: formData.name,
-        price: parseFloat(formData.price), // Ensures price can accept decimals like 10.99
-        categoryId: parseInt(formData.categoryId, 10), // Converts to integer
+        price: parseFloat(formData.price),
+        categoryId: parseInt(formData.categoryId, 10),
         image: formData.image,
         description: formData.description,
-        stock: parseInt(formData.stock, 10), // Converts to integer
-        userId: parseInt(formData.userId, 10), // Converts to integer
+        stock: parseInt(formData.stock, 10),
+        userId: parseInt(localStorage.getItem("userId"), 10),
       });
+
       toast.success("Product updated successfully!");
-      navigate('/listproductadmin');
+      navigate("/listproductadmin");
     } catch (error) {
       console.error(error);
       toast.error("Failed to update product.");
     }
   };
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Edit Product</h1>
       <form onSubmit={handleSave} className="space-y-4">
-      <label htmlFor='name'>Name</label>
+        <label htmlFor="name">Name</label>
         <input
           type="text"
           name="name"
@@ -81,7 +100,7 @@ const EditProductAdmin = () => {
           className="w-full p-2 border rounded"
           required
         />
-        <label htmlFor='name'>Price</label>
+        <label htmlFor="name">Price</label>
         <input
           type="number"
           name="price"
@@ -91,17 +110,21 @@ const EditProductAdmin = () => {
           className="w-full p-2 border rounded"
           required
         />
-        <label htmlFor='name'>Category ID</label>
-        <input
-          type="number"
+        <label htmlFor="name">Category</label>
+        <select
           name="categoryId"
-          placeholder="Category ID"
           value={formData.categoryId}
           onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <label htmlFor='name'>Image Product</label>
+          className="border p-2 w-full mb-4"
+        >
+          <option value="">Select a category</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+        <label htmlFor="name">Image Product</label>
         <input
           type="text"
           name="image"
@@ -111,7 +134,7 @@ const EditProductAdmin = () => {
           className="w-full p-2 border rounded"
           required
         />
-        <label htmlFor='name'>Description</label>
+        <label htmlFor="name">Description</label>
         <textarea
           name="description"
           placeholder="Description"
@@ -120,7 +143,7 @@ const EditProductAdmin = () => {
           className="w-full p-2 border rounded"
           required
         ></textarea>
-        <label htmlFor='name'>Stock</label>
+        <label htmlFor="name">Stock</label>
         <input
           type="number"
           name="stock"
@@ -135,6 +158,13 @@ const EditProductAdmin = () => {
           className="bg-blue-500 text-white px-4 py-2 rounded"
         >
           Save
+        </button>
+        <button
+          type="submit"
+          className="border-2 border-blue-500 bg-gray-200 px-4 py-2 rounded ml-2"
+          onClick={() => navigate("/listproductadmin")}
+        >
+          Cancel
         </button>
       </form>
     </div>

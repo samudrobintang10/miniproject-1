@@ -18,7 +18,7 @@ This project use ReactJS, Material UI and Tailwind
 
 
 ```
-  [https://www.exchangerate-api.com/](https://drive.google.com/file/d/1uMQ06TRD5gmVx_kzAqhnIOV9DvotDtFP/view?usp=sharing)
+  https://drive.google.com/file/d/1uMQ06TRD5gmVx_kzAqhnIOV9DvotDtFP/view?usp=sharing
 ```
 
 ## How to run project
@@ -26,7 +26,7 @@ This project use ReactJS, Material UI and Tailwind
 Clone the project
 
 ```bash
-  git clone [https://link-to-project](https://github.com/samudrobintang10/miniproject-1.git)
+  git clone https://github.com/samudrobintang10/miniproject-1.git
 ```
 
 Install dependencies
