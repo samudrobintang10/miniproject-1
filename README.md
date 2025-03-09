@@ -54,4 +54,6 @@ You can use the following test accounts to log in:
 **Tagline Product:**  
 _Beli barang online? Yuk Checkout aja!! 😊😊_
 
-![yukcheckout](https://github.com/user-attachments/assets/aaf6a43f-bafe-4298-a4f3-2d75ea965ea2)
+
+
+https://github.com/user-attachments/assets/333ab70f-9e7a-4075-af85-1820cf86062a
