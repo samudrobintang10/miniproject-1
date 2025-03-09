@@ -13,7 +13,7 @@ import { AuthContext, AuthProvider } from "./contexts/AuthContext.jsx";
 import CreateProduct from "./views/CreateProductAdmin.jsx";
 import axios from "axios";
 import ListProductAdmin from "./views/ListProductAdmin.jsx";
-import EditProductAdmin from "./EditProductAdmin.jsx";
+import EditProductAdmin from "./views/EditProductAdmin.jsx";
 
 const token = localStorage.getItem("accessToken");
 if (token) {
