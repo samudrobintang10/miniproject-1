@@ -135,7 +135,7 @@ export default function ProductDetail() {
             {/* Product Details */}
             <div className="flex flex-col justify-between">
               <h2 className="text-sm text-gray-600">
-                Kategori: {categoryName}
+                Category: {categoryName}
               </h2>
               <h1 className="mb-2 text-2xl font-bold text-gray-800">
                 <p>{data.name}</p>
@@ -156,7 +156,7 @@ export default function ProductDetail() {
                   $ {data.price || "Stok Kosong"}
                 </p>
                 <p className="pt-1 text-sm text-gray-400 fontsemibold">
-                  Stok: {data.stock || "Stok Kosong"}
+                  Stock: {data.stock || "Stok Kosong"}
                 </p>
               </div>
 
